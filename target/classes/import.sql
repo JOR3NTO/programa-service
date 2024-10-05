@@ -1,0 +1,1 @@
+INSERT INTO programa (nombrePrograma, SNIES, descripcionPrograma, imagenPrograma) VALUES ('Ingenieria de sistemas',1234, 'blablabla', 'urlSistemas');
