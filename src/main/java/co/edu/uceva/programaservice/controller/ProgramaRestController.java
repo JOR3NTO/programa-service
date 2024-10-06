@@ -1,5 +1,6 @@
 package co.edu.uceva.programaservice.controller;
 
+import co.edu.uceva.programaservice.model.entities.Programa;
 import co.edu.uceva.programaservice.model.service.IProgramaService;
 import co.edu.uceva.programaservice.model.service.ProgramaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,12 @@ public class ProgramaRestController {
         return "su programa es " + nombrePrograma;
     }
 
+
+
+    @DeleteMapping
+    public void deletePrograma(@PathVariable Long idPrograma) {
+        Programa programa = this.programaService.getProgramaById(idPrograma);
+        this.programaService.deletePrograma(programa);
+    }
 
 }
