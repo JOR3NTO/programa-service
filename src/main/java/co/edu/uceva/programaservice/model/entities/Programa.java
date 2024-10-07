@@ -22,6 +22,7 @@ public class Programa {
     private int SNIES;
     private String descripcionPrograma;
     private String imagenPrograma;
+    private String facultad;
 
 
     /*
