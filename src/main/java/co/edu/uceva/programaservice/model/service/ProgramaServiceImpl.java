@@ -20,5 +20,12 @@ public class ProgramaServiceImpl implements IProgramaService {
     }
 
 
+    /*Este metodo se encarga de listar todos los Programas
+   @return retorna una lista de Programas
+    */
+    @Override
+    public List<Programa> listar() {
+        return null;
+    }
 }
 
