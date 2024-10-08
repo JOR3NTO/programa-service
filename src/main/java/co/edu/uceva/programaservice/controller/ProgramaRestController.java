@@ -36,7 +36,7 @@ public class ProgramaRestController {
     public String holaMundo(@PathVariable("nombre") String nombrePrograma) {
         return "su programa es " + nombrePrograma;
     }
-    @GetMapping("/programa/")
+    @GetMapping("/programas")
     public List<Programa> listar(){
         return this.programaService.listar() ;
     }

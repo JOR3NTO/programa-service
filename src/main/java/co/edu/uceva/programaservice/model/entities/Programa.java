@@ -1,16 +1,15 @@
 package co.edu.uceva.programaservice.model.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 
 @Entity   //Esto es parte de JPA que es Java Persistence API
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 
 
 
