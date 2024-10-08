@@ -30,4 +30,15 @@ public class ProgramaServiceImpl implements IProgramaService {
     public void deletePrograma(Programa programa) {
         programaDao.delete(programa);
     }
+
+
+    /**
+     * Este metodo se encarga de guardar un programa
+     * @param programa objeto de tipo Programa que se va a guardar
+     * @return retorna un objeto de tipo Programa
+     */
+    @Override
+    public Programa save(Programa programa) {
+        return programaDao.save(programa);
+    }
 }

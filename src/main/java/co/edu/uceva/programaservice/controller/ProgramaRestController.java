@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Esta clase se encarga de exponer los servicios rest de la entidad programa y se mapea con la url /api/programa-service
  */
-
-
 @RestController
 @RequestMapping("/api/programa-service")
 public class ProgramaRestController {
@@ -30,9 +28,20 @@ public class ProgramaRestController {
      * @return retorna un string con su programa es ...
      */
 
-    @GetMapping("/programa/{nombre}")
-    public String holaMundo(@PathVariable("nombre") String nombrePrograma) {
+    @GetMapping("/programas/{nombres}")
+    public String holaMundo(@PathVariable("nombres") String nombrePrograma) {
         return "su programa es " + nombrePrograma;
+    }
+
+    /**
+     * Metodo que crea un programa
+     *
+     * @param programa programa a crear
+     * @return Programa creado
+     */
+    @PostMapping("/programa")
+    public Programa crearPrograma(@RequestBody Programa programa){
+        return programaService.save(programa);
     }
 
 
