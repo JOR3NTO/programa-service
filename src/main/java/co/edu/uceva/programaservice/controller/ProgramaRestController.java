@@ -25,7 +25,7 @@ public class ProgramaRestController {
     /**
      * Este metodo se encarga de retornar un saludo con el nombre que se le pase por parametro en la url
      *
-     * @param nombrePrograma nombre del programa
+     * nombrePrograma nombre del programa
      * @return retorna un string con su programa es ...
 
 
@@ -36,7 +36,11 @@ public class ProgramaRestController {
      */
 
 
-
+    /**
+     * Metodo que lista los programas
+     *
+     * @return Lista de programas
+     */
 
     @GetMapping("/programas")
     public List<Programa> listar(){
