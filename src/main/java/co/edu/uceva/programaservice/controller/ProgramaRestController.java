@@ -58,9 +58,13 @@ public class ProgramaRestController {
         return programaService.save(programa);
     }
 
+    /**
+     * Metodo que elimina un Programa por id
+     * @param idPrograma del Programa a eliminar
+     */
+    @DeleteMapping("/programa/{idPrograma}")
+    public void deletePrograma(@PathVariable("idPrograma") Long idPrograma) {
 
-    @DeleteMapping
-    public void deletePrograma(@PathVariable Long idPrograma) {
         Programa programa = this.programaService.getProgramaById(idPrograma);
         this.programaService.deletePrograma(programa);
     }
