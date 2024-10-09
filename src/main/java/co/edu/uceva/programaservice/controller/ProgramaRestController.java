@@ -6,6 +6,8 @@ import co.edu.uceva.programaservice.model.service.ProgramaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Esta clase se encarga de exponer los servicios rest de la entidad programa y se mapea con la url /api/programa-service
  */
@@ -32,6 +34,13 @@ public class ProgramaRestController {
     public String holaMundo(@PathVariable("nombres") String nombrePrograma) {
         return "su programa es " + nombrePrograma;
     }
+    @GetMapping("/programas")
+    public List<Programa> listar(){
+        return this.programaService.listar() ;
+    }
+
+
+
 
     /**
      * Metodo que crea un programa

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class ProgramaServiceImpl implements IProgramaService {
@@ -40,5 +42,13 @@ public class ProgramaServiceImpl implements IProgramaService {
     @Override
     public Programa save(Programa programa) {
         return programaDao.save(programa);
+    }
+
+    /*Este metodo se encarga de listar todos los Programas
+   @return retorna una lista de Programas
+    */
+    @Override
+    public List<Programa> listar() {
+        return (List<Programa>) programaDao.findAll();
     }
 }
