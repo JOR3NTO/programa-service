@@ -6,6 +6,8 @@ import co.edu.uceva.programaservice.model.service.ProgramaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Esta clase se encarga de exponer los servicios rest de la entidad programa y se mapea con la url /api/programa-service
  */
@@ -16,7 +18,6 @@ public class ProgramaRestController {
     private ProgramaServiceImpl programaService; //Servicio de la entidad pais para realizar las operaciones CRUD
 
     // Inyectamos el servicio mediante el constructor
-
     public ProgramaRestController(ProgramaServiceImpl programaService) {
         this.programaService = programaService;
     }
@@ -26,11 +27,20 @@ public class ProgramaRestController {
      *
      * @param nombrePrograma nombre del programa
      * @return retorna un string con su programa es ...
-     */
+
 
     @GetMapping("/programas/{nombres}")
     public String holaMundo(@PathVariable("nombres") String nombrePrograma) {
         return "su programa es " + nombrePrograma;
+    }
+     */
+
+
+
+
+    @GetMapping("/programas")
+    public List<Programa> listar(){
+        return this.programaService.listar() ;
     }
 
     /**
@@ -44,13 +54,13 @@ public class ProgramaRestController {
         return programaService.save(programa);
     }
 
-
     /**
      * Metodo que elimina un Programa por id
      * @param idPrograma del Programa a eliminar
      */
     @DeleteMapping("/programa/{idPrograma}")
     public void deletePrograma(@PathVariable("idPrograma") Long idPrograma) {
+
         Programa programa = this.programaService.getProgramaById(idPrograma);
         this.programaService.deletePrograma(programa);
     }

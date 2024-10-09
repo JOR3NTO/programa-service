@@ -1,8 +1,10 @@
 package co.edu.uceva.programaservice.model.entities;
 
-
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 //@Data
 @Entity   //Esto es parte de JPA que es Java Persistence API
@@ -12,15 +14,15 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name="programa")
 
+
 public class Programa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPrograma;
     private String nombrePrograma;
-
     private int SNIES;
-
     private String descripcionPrograma;
-
     private String imagenPrograma;
+
+
 }
