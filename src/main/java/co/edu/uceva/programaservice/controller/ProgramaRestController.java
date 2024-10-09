@@ -61,4 +61,16 @@ public class ProgramaRestController {
         this.programaService.deletePrograma(programa);
     }
 
+    /**
+     * Metodo que editar/actualizar un programa
+     *
+     * @param programa programa a editar
+     * @return Programa editado
+     */
+
+    @PutMapping("/programa")
+    public Programa editarPrograma(@RequestBody Programa programa){
+        return programaService.editar(programa);
+    }
+
 }

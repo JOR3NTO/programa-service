@@ -17,4 +17,6 @@ public interface IProgramaService {
     void deletePrograma(Programa programa); // Elimina un programa
     Programa getProgramaById(Long idPrograma); // Busca Programa por id
     Programa save(Programa programa);//Guarda un programa y me retorna un objeto de tipo Programa
+    Programa editar(Programa programa);//Guarda una edicion/actualizacion de un programa y retorna un objeto tipo de programa
+
 }

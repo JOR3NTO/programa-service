@@ -52,4 +52,16 @@ public class ProgramaServiceImpl implements IProgramaService {
     public List<Programa> listar() {
         return (List<Programa>) programaDao.findAll();
     }
+
+    /**
+     * Este metodo se encarga de guardar la edicion de un programa
+     * @param programa objeto de tipo Programa que se va a guardar
+     * @return retorna un objeto de tipo Programa
+     */
+
+    @Override
+    public Programa editar(Programa programa) {
+        return programaDao.save(programa);
+    }
+
 }
