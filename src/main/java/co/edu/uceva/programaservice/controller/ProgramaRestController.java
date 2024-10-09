@@ -18,7 +18,6 @@ public class ProgramaRestController {
     private ProgramaServiceImpl programaService; //Servicio de la entidad pais para realizar las operaciones CRUD
 
     // Inyectamos el servicio mediante el constructor
-
     public ProgramaRestController(ProgramaServiceImpl programaService) {
         this.programaService = programaService;
     }
@@ -28,19 +27,21 @@ public class ProgramaRestController {
      *
      * @param nombrePrograma nombre del programa
      * @return retorna un string con su programa es ...
-     */
+
 
     @GetMapping("/programas/{nombres}")
     public String holaMundo(@PathVariable("nombres") String nombrePrograma) {
         return "su programa es " + nombrePrograma;
     }
+     */
+
+
+
+
     @GetMapping("/programas")
     public List<Programa> listar(){
         return this.programaService.listar() ;
     }
-
-
-
 
     /**
      * Metodo que crea un programa
@@ -52,7 +53,6 @@ public class ProgramaRestController {
     public Programa crearPrograma(@RequestBody Programa programa){
         return programaService.save(programa);
     }
-
 
 
     @DeleteMapping
