@@ -11,7 +11,6 @@ import java.util.List;
  * Esta clase se encarga de exponer los servicios rest de la entidad programa y se mapea con la url /api/programa-service
  */
 
-
 @RestController
 @RequestMapping("/api/programa-service")
 public class ProgramaRestController {
@@ -39,13 +38,14 @@ public class ProgramaRestController {
     /**
      * Este metodo se encarga de filtrar programas por facultad
      *
-     * @param facultad nombre de facultad a filtrar
+     * @param idFacultad nombre de facultad a filtrar
      * @return lista de programas pertenecientes a la facultad
      */
-    @GetMapping("/facultad/{facultad}")
-    public List<String> filtrarporfacultad(@PathVariable("facultad") String facultad){
-        // Llamar a un metodo de servicio que implemente el filtrado
-        return programaService.filtrarporfacultad(List<String> facultad);
+    @GetMapping("/programas/facultad/{id}")
+    public List<Programa> filtrarPorFacultad(@PathVariable("id") Long idFacultad){
+        List<Programa> programas = (List<Programa>) this.programaService.getProgramasByFacultadId(idFacultad);
+        return programas;
+
     }
 
 }

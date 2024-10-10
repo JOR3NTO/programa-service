@@ -23,10 +23,7 @@ public class ProgramaServiceImpl implements IProgramaService {
         this.programaServiceApplication = programaServiceApplication;
     }
 
-    public List<Programa> filtrarporfacultad(List<Programa> programa, String facultad) {
-        // Filtramos los programas por facultad utilizando el metodo getfacultad
-        return programa.stream()
-                .filter(programaServiceApplication -> programa.getfacultad().equalsIgnoreCase(facultad))
-                .collect(Collectors.toList());
+    public List<Programa> getProgramasByFacultadId(Long facultadId) {
+        return (List<Programa>) programaDao.findByIdFacultad(facultadId);
     }
 }

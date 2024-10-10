@@ -18,54 +18,16 @@ public class Programa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPrograma;
+    private Long idFacultad;
     private String nombrePrograma;
-    private int SNIES;
+    private int snies;
     private String descripcionPrograma;
     private String imagenPrograma;
     private String facultad;
 
+    /**
+     private long idFacultad;*
+     @ManyToOne
+     private Facultad facultad*/
 
-    /*
-
-    public Long getIdPrograma() {
-        return idPrograma;
-    }
-
-    public void setIdPrograma(Long idPrograma) {
-        this.idPrograma = idPrograma;
-    }
-
-    public String getNombrePrograma() {
-        return nombrePrograma;
-    }
-
-    public void setNombrePrograma(String nombrePrograma) {
-        this.nombrePrograma = nombrePrograma;
-    }
-
-    public int getSNIES() {
-        return SNIES;
-    }
-
-    public void setSNIES(int SNIES) {
-        this.SNIES = SNIES;
-    }
-
-    public String getDescripcionPrograma() {
-        return descripcionPrograma;
-    }
-
-    public void setDescripcionPrograma(String descripcionPrograma) {
-        this.descripcionPrograma = descripcionPrograma;
-    }
-
-    public String getImagenPrograma() {
-        return imagenPrograma;
-    }
-
-    public void setImagenPrograma(String imagenPrograma) {
-        this.imagenPrograma = imagenPrograma;
-    }
-
-    */
 }
