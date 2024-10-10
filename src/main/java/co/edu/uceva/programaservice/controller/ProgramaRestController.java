@@ -64,9 +64,8 @@ public class ProgramaRestController {
      */
     @DeleteMapping("/programa/{idPrograma}")
     public void deletePrograma(@PathVariable("idPrograma") Long idPrograma) {
-
         Programa programa = this.programaService.getProgramaById(idPrograma);
         this.programaService.deletePrograma(programa);
     }
-
+    
 }
