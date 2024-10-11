@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -93,6 +94,20 @@ public class ProgramaRestControllerTests {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Prueba del metodo DELETE "/api/programa-service/programa/{idPrograma}", que comprueba que se elimina un programa correctamente.
+     * @throws Exception Se lanza una excepcion si no se encuentra el programa con el id especificado.
+     */
+    @Test
+    public void testDeletePrograma() throws Exception {
+        Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846, "Programa que forma Ingenieros Industriales", "Industriales.png", "Ingenieria");
+        programa = programaService.save(programa);
+
+        this.mockMvc.perform(delete("/api/programa-service/programa/{idPrograma}", programa.getIdPrograma()))
+                .andExpect(status().isOk());
+        assertNull(programaService.getProgramaById(programa.getIdPrograma()));
     }
 
 }
