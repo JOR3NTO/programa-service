@@ -65,7 +65,7 @@ public class ProgramaRestControllerTests {
 
 
     /**
-     * Prueba del método POST "/api/programa-service/programa", que comprueba que se crea un nuevo país correctamente.
+     * Prueba del método POST "/api/programa-service/programa", que comprueba que se crea un nuevo programa correctamente.
      * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
      */
     @Test
@@ -80,6 +80,21 @@ public class ProgramaRestControllerTests {
         programaService.deletePrograma(programa);
     }
 
+    /**
+     * Prueba del método GET "/api/pais-service/paises/{id}", que comprueba que se recibe el país correcto en la respuesta.
+     * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
+     */
+    @Test
+    public void testFiltrarProgramas() throws Exception {
+        Programa programas = new Programa(null, 2L,"Derecho", 5678, "Programa que forma abogados", "urlDerecho.png", "A");
+        programaService.save(programas);
+
+        this.mockMvc.perform(get("/api/programa-service/programa/{id}", programas.getIdFacultad()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.Programas", is(programas.getIdFacultad())));
+
+        programaService.deletePrograma(programas);
+    }
 
     /**
      * Método para convertir un objeto a una cadena JSON
