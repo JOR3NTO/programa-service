@@ -29,6 +29,6 @@ public class Programa {
     /**
      private long idFacultad;*
      @ManyToOne
-     private Facultad facultad*/
-
+     private Facultad facultad
+     */
 }
