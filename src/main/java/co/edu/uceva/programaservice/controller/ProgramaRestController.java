@@ -55,8 +55,8 @@ public class ProgramaRestController {
     public List<Programa> filtrarPorFacultad(@PathVariable("id") Long idFacultad){
         List<Programa> programas = (List<Programa>) this.programaService.getProgramasByFacultadId(idFacultad);
         return programas;
-
     }
+
     /**
      * Metodo que elimina un Programa por id
      * @param idPrograma del Programa a eliminar

@@ -31,5 +31,4 @@ public class Programa {
      @ManyToOne
      private Facultad facultad
      */
-
 }
