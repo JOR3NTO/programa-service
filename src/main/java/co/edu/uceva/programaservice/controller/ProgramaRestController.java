@@ -5,6 +5,9 @@ import co.edu.uceva.programaservice.model.service.IProgramaService;
 import co.edu.uceva.programaservice.model.entities.Programa;
 import co.edu.uceva.programaservice.model.service.ProgramaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +47,11 @@ public class ProgramaRestController {
     public List<Programa> listar(){
         return this.programaService.listar() ;
     }
+    /*@GetMapping("/programas/page/{page}")
+    public Page<Programa> index(@PathVariable Integer page) {
+        Pageable pageable = PageRequest.of(page, 4);  // Número de página y tamaño de página (4 elementos por página)
+        return programaService.listar(pageable);
+    }*/
 
     /**
      * Este metodo se encarga de filtrar programas por facultad
@@ -56,6 +64,7 @@ public class ProgramaRestController {
         List<Programa> programas = (List<Programa>) this.programaService.getProgramasByFacultadId(idFacultad);
         return programas;
     }
+
 
     /**
      * Metodo que elimina un Programa por id
