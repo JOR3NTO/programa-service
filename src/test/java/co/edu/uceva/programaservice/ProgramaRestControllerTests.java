@@ -63,7 +63,23 @@ public class ProgramaRestControllerTests {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-
+    /**
+     * Prueba del método GET "/api/programa-service/programa", que comprueba que se recibe una lista de programas en la respuesta.
+     * @throws Exception Se lanza una excepción si no devuelve la lista de programas correcta.
+     */
+    @Test
+    public void testListar() throws Exception {
+        Programa programa1 = new Programa(null, 1L, "Ingeniería de Sistemas", 12345, "Descripción Ingeniería de Sistemas", "imagen1.jpg", "Facultad de Ingeniería");
+        Programa programa2 = new Programa(null, 2L, "Derecho", 54321, "Descripción Derecho", "imagen2.jpg", "Facultad de Derecho");
+        programaService.save(programa1);
+        programaService.save(programa2);
+        this.mockMvc.perform(get("/api/programa-service/programas"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].nombrePrograma", is(programa1.getNombrePrograma()))) //Trae la info de la bd y la compara con el json
+                .andExpect(jsonPath("$[1].nombrePrograma", is(programa2.getNombrePrograma())));
+        programaService.deletePrograma(programa1);
+        programaService.deletePrograma(programa2);
+    }
     /**
      * Prueba del método POST "/api/programa-service/programa", que comprueba que se crea un nuevo país correctamente.
      * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
