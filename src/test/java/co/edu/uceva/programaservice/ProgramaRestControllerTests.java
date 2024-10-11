@@ -81,7 +81,7 @@ public class ProgramaRestControllerTests {
     }
 
     /**
-     * Prueba del método GET "/api/pais-service/paises/{id}", que comprueba que se recibe el país correcto en la respuesta.
+     * Prueba del método GET "/api/programa-service/programa", que comprueba que se recibe el país correcto en la respuesta.
      * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
      */
     @Test
