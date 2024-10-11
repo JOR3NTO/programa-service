@@ -19,10 +19,17 @@ public class Programa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPrograma;
+    private Long idFacultad;
     private String nombrePrograma;
-    private int SNIES;
+    private int snies;
     private String descripcionPrograma;
     private String imagenPrograma;
+    private String facultad;
 
+    /**
+     private long idFacultad;*
+     @ManyToOne
+     private Facultad facultad
+     */
 
 }

@@ -2,6 +2,7 @@ package co.edu.uceva.programaservice.controller;
 
 import co.edu.uceva.programaservice.model.entities.Programa;
 import co.edu.uceva.programaservice.model.service.IProgramaService;
+import co.edu.uceva.programaservice.model.entities.Programa;
 import co.edu.uceva.programaservice.model.service.ProgramaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,30 +23,6 @@ public class ProgramaRestController {
         this.programaService = programaService;
     }
 
-    /**
-     * Este metodo se encarga de retornar un saludo con el nombre que se le pase por parametro en la url
-     *
-     * nombrePrograma nombre del programa
-     * @return retorna un string con su programa es ...
-
-
-    @GetMapping("/programas/{nombres}")
-    public String holaMundo(@PathVariable("nombres") String nombrePrograma) {
-        return "su programa es " + nombrePrograma;
-    }
-     */
-
-
-    /**
-     * Metodo que lista los programas
-     *
-     * @return Lista de programas
-     */
-
-    @GetMapping("/programas")
-    public List<Programa> listar(){
-        return this.programaService.listar() ;
-    }
 
     /**
      * Metodo que crea un programa
@@ -58,6 +35,28 @@ public class ProgramaRestController {
         return programaService.save(programa);
     }
 
+     /**
+     * Metodo que lista los programas
+     *
+     * @return Lista de programas
+     */
+    @GetMapping("/programas")
+    public List<Programa> listar(){
+        return this.programaService.listar() ;
+    }
+
+    /**
+     * Este metodo se encarga de filtrar programas por facultad
+     *
+     * @param idFacultad nombre de facultad a filtrar
+     * @return lista de programas pertenecientes a la facultad
+     */
+    @GetMapping("/programas/facultad/{id}")
+    public List<Programa> filtrarPorFacultad(@PathVariable("id") Long idFacultad){
+        List<Programa> programas = (List<Programa>) this.programaService.getProgramasByFacultadId(idFacultad);
+        return programas;
+
+    }
     /**
      * Metodo que elimina un Programa por id
      * @param idPrograma del Programa a eliminar
@@ -67,5 +66,5 @@ public class ProgramaRestController {
         Programa programa = this.programaService.getProgramaById(idPrograma);
         this.programaService.deletePrograma(programa);
     }
-    
+
 }
