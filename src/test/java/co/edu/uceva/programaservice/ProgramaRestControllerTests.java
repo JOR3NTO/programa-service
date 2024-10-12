@@ -1,4 +1,5 @@
-ppackage co.edu.uceva.programaservice;
+package co.edu.uceva.programaservice;
+
 
 
 import co.edu.uceva.programaservice.model.entities.Programa;
@@ -64,6 +65,46 @@ public class ProgramaRestControllerTests {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
+    /**
+     * Prueba del método POST "/api/programa-service/programa", que comprueba que se crea un nuevo programa correctamente.
+     * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
+     */
+
+    @Test
+    public void testCrearPrograma() throws Exception {
+        Programa programa = new Programa();
+
+        this.mockMvc.perform(post("/api/programa-service/programa")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(programa)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.programa", is(programa.getIdPrograma())));
+        programaService.deletePrograma(programa);
+    }
+
+    /**
+     * Prueba del método GET "/api/programa-service/programa", que comprueba que se recibe el país correcto en la respuesta.
+     * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
+     */
+
+    @Test
+    public void testFiltrarProgramas() throws Exception {
+        Programa programas = new Programa(null, 2L,"Derecho", 5678, "Programa que forma abogados", "urlDerecho.png", "A");
+        programaService.save(programas);
+
+        this.mockMvc.perform(get("/api/programa-service/programa/{id}", programas.getIdFacultad()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.Programas", is(programas.getIdFacultad())));
+
+        programaService.deletePrograma(programas);
+    }
+
+    /**
+     * Método para convertir un objeto a una cadena JSON
+     *
+     * @param obj Objeto a convertir
+     * @return Cadena JSON
+     */
     private String asJsonString(Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
@@ -88,6 +129,19 @@ public class ProgramaRestControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.programa", is(programa.getIdPrograma())));
         programaService.deletePrograma(programa);
+      
+     /**
+     * Prueba del metodo DELETE "/api/programa-service/programa/{idPrograma}", que comprueba que se elimina un programa correctamente.
+     * @throws Exception Se lanza una excepcion si no se encuentra el programa con el id especificado.
+     */
+    @Test
+    public void testDeletePrograma() throws Exception {
+        Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846, "Programa que forma Ingenieros Industriales", "Industriales.png", "Ingenieria");
+        programa = programaService.save(programa);
+
+        this.mockMvc.perform(delete("/api/programa-service/programa/{idPrograma}", programa.getIdPrograma()))
+                .andExpect(status().isOk());
+        assertNull(programaService.getProgramaById(programa.getIdPrograma()));
     }
 
 }
