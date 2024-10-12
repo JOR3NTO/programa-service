@@ -113,7 +113,7 @@ public class ProgramaRestController {
             programaActual.setNombrePrograma(programa.getNombrePrograma());
             programaActual.setDescripcionPrograma(programa.getDescripcionPrograma());
             programaActual.setImagenPrograma(programa.getImagenPrograma());
-            programaActual.setSNIES(programa.getSNIES());
+            programaActual.setSnies(programa.getSnies());
 
 
             Programa programaActualizado = this.programaService.save(programaActual);
