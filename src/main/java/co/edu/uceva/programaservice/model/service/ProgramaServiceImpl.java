@@ -29,8 +29,8 @@ public class ProgramaServiceImpl implements IProgramaService {
         return (List<Programa>) programaDao.findByIdFacultad(facultadId);
     }
     @Override
-    public Programa getProgramaById(Long idPrograma) {
-        return programaDao.findById(idPrograma).orElse(null);
+    public Programa getProgramaById(Long id) {
+        return programaDao.findById(id).orElse(null);
     }
 
     /**
@@ -62,4 +62,5 @@ public class ProgramaServiceImpl implements IProgramaService {
     public List<Programa> listar() {
         return (List<Programa>) programaDao.findAll();
     }
+
 }

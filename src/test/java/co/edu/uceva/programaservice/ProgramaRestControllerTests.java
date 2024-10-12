@@ -1,6 +1,7 @@
 package co.edu.uceva.programaservice;
 
 
+
 import co.edu.uceva.programaservice.model.entities.Programa;
 import co.edu.uceva.programaservice.model.service.IProgramaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,7 +65,6 @@ public class ProgramaRestControllerTests {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-
     /**
      * Prueba del método POST "/api/programa-service/programa", que comprueba que se crea un nuevo programa correctamente.
      * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
@@ -114,6 +114,23 @@ public class ProgramaRestControllerTests {
     }
 
     /**
+     * Prueba del método PUT "/api/programa-service/pais", que comprueba que se actualiza un programa correctamente.
+     * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
+     */
+    @Test
+    public void testEditarPrograma() throws Exception {
+        Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846, "Programa que forma Ingenieros Industriales", "Industriales.png", "Ingenieria");
+        programaService.save(programa);
+        programa.setIdPrograma(null, 2L,"Derecho", 5678, "Programa que forma abogados", "urlDerecho.png", "A");
+
+        this.mockMvc.perform(put("/api/programa-service/pais")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(programa)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.programa", is(programa.getIdPrograma())));
+        programaService.deletePrograma(programa);
+      
+     /**
      * Prueba del metodo DELETE "/api/programa-service/programa/{idPrograma}", que comprueba que se elimina un programa correctamente.
      * @throws Exception Se lanza una excepcion si no se encuentra el programa con el id especificado.
      */
