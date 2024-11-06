@@ -78,9 +78,15 @@ public class ProgramaRestControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(programa)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.programa", is(programa.getIdPrograma())));
+                .andExpect(jsonPath("$.idPrograma").exists()) // Verifica que idPrograma existe en el JSON
+                .andExpect(jsonPath("$.nombrePrograma", is(programa.getNombrePrograma())))
+                .andExpect(jsonPath("$.descripcionPrograma", is(programa.getDescripcionPrograma())))
+                .andExpect(jsonPath("$.facultad", is(programa.getFacultad())))
+                .andExpect(jsonPath("$.snies", is(programa.getSnies())));
+
         programaService.deletePrograma(programa);
     }
+
 
     /**
      * Prueba del método GET "/api/programa-service/programa", que comprueba que se recibe el país correcto en la respuesta.
@@ -89,46 +95,48 @@ public class ProgramaRestControllerTests {
 
     @Test
     public void testFiltrarProgramas() throws Exception {
-        Programa programas = new Programa(null, 2L,"Derecho", 5678, "Programa que forma abogados", "urlDerecho.png", "A");
-        programaService.save(programas);
+        // Crea el objeto Programa y guárdalo en la base de datos
+        Programa programa = new Programa(null, 2L, "Derecho", 5678, "Programa que forma abogados", "urlDerecho.png", "A");
+        programaService.save(programa);
 
-        this.mockMvc.perform(get("/api/programa-service/programa/{id}", programas.getIdFacultad()))
+        // Realiza la solicitud GET y verifica la respuesta
+        this.mockMvc.perform(get("/api/programa-service/programas/facultad/{id}", programa.getIdFacultad()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.Programas", is(programas.getIdFacultad())));
+                .andExpect(jsonPath("$.idPrograma", is(programa.getIdFacultad().intValue())))
+                .andExpect(jsonPath("$.nombrePrograma", is(programa.getNombrePrograma())))
+                .andExpect(jsonPath("$.descripcionPrograma", is(programa.getDescripcionPrograma())))
+                .andExpect(jsonPath("$.imagenPrograma", is(programa.getImagenPrograma())))
+                .andExpect(jsonPath("$.facultad", is(programa.getFacultad())));
 
-        programaService.deletePrograma(programas);
+        // Limpia después de la prueba eliminando el programa
+        programaService.deletePrograma(programa);
     }
 
-    /**
-     * Método para convertir un objeto a una cadena JSON
-     *
-     * @param obj Objeto a convertir
-     * @return Cadena JSON
-     */
-    private String asJsonString(Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     /**
      * Prueba del método PUT "/api/programa-service/pais", que comprueba que se actualiza un programa correctamente.
      * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
      */
-    @Test
+        @Test
     public void testEditarPrograma() throws Exception {
         Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846, "Programa que forma Ingenieros Industriales", "Industriales.png", "Ingenieria");
         programaService.save(programa);
-        //Reparar
-        //programa.setIdPrograma(null, 2L, "Derecho", 5678, "Programa que forma abogados", "urlDerecho.png", "A");
+        programa.setIdPrograma(2l);
+        programa.setNombrePrograma("Derecho");
+        programa.setDescripcionPrograma("Programa que forma abogados");
+        programa.setFacultad("Humanidades");
+        programa.setImagenPrograma("urlDerecho.png");
+        programa.setSnies(5678);
 
-        this.mockMvc.perform(put("/api/programa-service/pais")
+        this.mockMvc.perform(put("/api/programa-service/programa/{id}", programa.getIdPrograma())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(programa)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.programa", is(programa.getIdPrograma())));
+                .andExpect(jsonPath("$.idPrograma").exists()) // Verifica que idPrograma existe en el JSON
+                .andExpect(jsonPath("$.nombrePrograma", is(programa.getNombrePrograma())))
+                .andExpect(jsonPath("$.descripcionPrograma", is(programa.getDescripcionPrograma())))
+                .andExpect(jsonPath("$.facultad", is(programa.getFacultad())))
+                .andExpect(jsonPath("$.snies", is(programa.getSnies())));
         programaService.deletePrograma(programa);
 
     }
@@ -144,6 +152,20 @@ public class ProgramaRestControllerTests {
         this.mockMvc.perform(delete("/api/programa-service/programa/{idPrograma}", programa.getIdPrograma()))
                 .andExpect(status().isOk());
         assertNull(programaService.getProgramaById(programa.getIdPrograma()));
+    }
+
+    /**
+     * Método para convertir un objeto a una cadena JSON
+     *
+     * @param obj Objeto a convertir
+     * @return Cadena JSON
+     */
+    private String asJsonString(Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

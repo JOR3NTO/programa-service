@@ -1,23 +1,16 @@
 package co.edu.uceva.programaservice.controller;
 
 import co.edu.uceva.programaservice.model.entities.Programa;
-import co.edu.uceva.programaservice.model.service.IProgramaService;
-import co.edu.uceva.programaservice.model.entities.Programa;
 import co.edu.uceva.programaservice.model.service.ProgramaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 /**
  * Esta clase se encarga de exponer los servicios rest de la entidad programa y se mapea con la url /api/programa-service
@@ -37,7 +30,7 @@ public class ProgramaRestController {
     /**
      * Metodo que busca un programa por su id
      *
-     * @param id id del programa a buscar
+     * @param idPrograma id del programa a buscar
      * @return Programa encontrado
      */
     @GetMapping("/programas/{idPrograma}")
