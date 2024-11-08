@@ -71,8 +71,8 @@ public class ProgramaRestControllerTests {
      */
     @Test
     public void testListar() throws Exception {
-        Programa programa1 = new Programa(null,1L, "Ingeniería de Sistemas", 12345, "Descripción Ingeniería de Sistemas", "imagen1.jpg", "Facultad de Ingeniería");
-        Programa programa2 = new Programa(null, 2L, "Derecho", 54321, "Descripción Derecho", "imagen2.jpg", "Facultad de Derecho");
+        Programa programa1 = new Programa(null,1L, "Ingeniería de Sistemas", 12345, "Descripción Ingeniería de Sistemas", "imagen1.jpg");
+        Programa programa2 = new Programa(null, 2L, "Derecho", 54321, "Descripción Derecho", "imagen2.jpg");
         programaService.save(programa1);
         programaService.save(programa2);
         this.mockMvc.perform(get("/api/programa-service/programas"))

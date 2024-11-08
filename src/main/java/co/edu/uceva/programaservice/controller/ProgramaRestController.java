@@ -60,11 +60,6 @@ public class ProgramaRestController {
     public List<Programa> listar(){
         return this.programaService.listar() ;
     }
-    /*@GetMapping("/programas/page/{page}")
-    public Page<Programa> index(@PathVariable Integer page) {
-        Pageable pageable = PageRequest.of(page, 4);  // Número de página y tamaño de página (4 elementos por página)
-        return programaService.listar(pageable);
-    }*/
 
     /**
      * Este metodo se encarga de filtrar programas por facultad
@@ -124,7 +119,5 @@ public class ProgramaRestController {
             return ResponseEntity.status(500).body(response);
         }
     }
-
-
 
 }
