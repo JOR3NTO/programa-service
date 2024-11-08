@@ -1,0 +1,63 @@
+name: Prueba
+#Formato yml para especificar que se debe hacer cuando se realice un push
+#Se ejecutara este archivo para las pruebas
+
+
+on:       # Eventos que disparan el flujo de trabajo (push, pull_request, etc)
+  push:         # Evento push
+    branches: [ main ]  # Rama master (principal)
+  pull_request:           # Evento pull_request (PR)
+    branches: [ main ]  # Rama master (principal)
+
+jobs:         # Trabajos que se ejecutan en paralelo (build, test, deploy, etc)
+  integration-test:        # Nombre del trabajo integration-test (prueba de integracion)
+    runs-on: ubuntu-latest    # Sistema operativo donde se ejecuta el trabajo (ubuntu-latest, windows-latest, macos-latest)
+
+    services:                 # Servicios que se ejecutan en paralelo (postgres, mysql, redis, etc)
+      db:                         # Nombre del servicio db (base de datos)
+        image: postgres               # La imagen de Docker para usarla como contenedor para ejecutar el action. El valor puede ser el nombre de imagen de Docker Hub un nombre de registro.
+        env:                          # Variables de entorno que se pasan al servicio
+          POSTGRES_USER: devdb            # Usuario de la base de datos del postgres
+          POSTGRES_PASSWORD: a1b2c3d4     # Contraseña de la base de datos del postgres
+          POSTGRES_DB: curso_springboot   # Nombre de la base de datos
+        ports:                        # Puertos que se exponen del servicio
+          - 5432:5432                     # Puerto de la base de datos (5432:5432)del postgres (puerto_host:puerto_contenedor)
+    steps:
+      - name: Ajustando el JDK 17   # Nombre del paso
+        uses: actions/setup-java@v3   # Acción ejecuta el setup de java
+        with: # Argumentos que se pasan a la acción
+          java-version: 17.x            # Versión de java que se instala
+          distribution: adopt           # Distribución de java que se instala (adopt, temurin, zulu, etc)
+          cache: maven
+
+      - name: Hacer build con Maven # Nombre del paso
+        run: mvn --batch-mode --update-snapshots clean package  # Comando que se ejecuta en el paso (mvn --batch-mode --update-snapshots clean package)
+
+      #Cuando terminemos de desarrollar los test unitarios activaremos este codigo para que se haga su prueba al hacer push al github
+
+      #- name: Ejecutar las pruebas unitarias  #Nombre del paso
+        #env:
+          #SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/curso_springboot    # URL de la base de datos
+          #SPRING_DATASOURCE_USERNAME: devdb                                           # Usuario de la base de datos
+          #SPRING_DATASOURCE_PASSWORD: a1b2c3d4                                        # Contraseña de la base de datos
+          #run: mvn --batch-mode test                # Comando que se ejecuta en el paso (mvn --batch-mode test)
+
+
+      #Para hacer un reporte en html autogenerado se usaran los siguientes 3 names
+
+      - name: Generar el reporte Surefire HTML    # Nombre del paso
+        run: mvn surefire-report:report             # Comando que se ejecuta en el paso (mvn surefire-report:report)
+
+      - name: Copia el reporte Surefire HTML al repositorio   # Nombre del paso
+        run: |                                                  # Se copia el reporte HTML de Surefire al repositorio 
+          mkdir -p reports  
+          cp -r target/surefire-reports/* reports/
+        if: always()            # Condición que se evalua para ejecutar el paso (always(), success(), failure(), etc)
+
+      - name: Copia el reporte HTML de Surefire al repositorio # Nombre del paso
+        uses: actions/upload-artifact@v3                        # Acción que se sube un artefacto al repositorio
+        with:                                                   # Argumentos que se pasan a la acción
+          name: Reporte Surefire HTML                               # Nombre del artefacto
+          path: target/site/surefire-report.html                    # Ruta del artefacto
+
+
