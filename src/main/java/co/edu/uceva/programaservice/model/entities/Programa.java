@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor  //Constructor vacio
 @Table(name="programa")
 
 
@@ -24,7 +24,6 @@ public class Programa {
     private int snies;
     private String descripcionPrograma;
     private String imagenPrograma;
-    private String facultad;
 
     /**
      private long idFacultad;*

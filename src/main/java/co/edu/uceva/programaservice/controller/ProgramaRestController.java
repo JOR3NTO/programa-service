@@ -119,11 +119,5 @@ public class ProgramaRestController {
     }
 
 
-    /**
-    public Programa actualizarPrograma(@RequestBody Programa programa){
-        return programaService.editar(programa);
-    }*/
-
-
 
 }

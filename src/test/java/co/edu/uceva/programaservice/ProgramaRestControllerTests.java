@@ -72,7 +72,8 @@ public class ProgramaRestControllerTests {
 
     @Test
     public void testCrearPrograma() throws Exception {
-        Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846, "Programa que forma Ingenieros Industriales", "Industriales.png", "Ingenieria");
+        Programa programa = new Programa(null, 4L, "Ingenieria Industrial",
+                465846, "Programa que forma Ingenieros Industriales", "Industriales.png");
 
         this.mockMvc.perform(post("/api/programa-service/programa")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +82,6 @@ public class ProgramaRestControllerTests {
                 .andExpect(jsonPath("$.idPrograma").exists()) // Verifica que idPrograma existe en el JSON
                 .andExpect(jsonPath("$.nombrePrograma", is(programa.getNombrePrograma())))
                 .andExpect(jsonPath("$.descripcionPrograma", is(programa.getDescripcionPrograma())))
-                .andExpect(jsonPath("$.facultad", is(programa.getFacultad())))
                 .andExpect(jsonPath("$.snies", is(programa.getSnies())));
 
         programaService.deletePrograma(programa);
@@ -96,19 +96,19 @@ public class ProgramaRestControllerTests {
     @Test
     public void testFiltrarProgramas() throws Exception {
         // Crea el objeto Programa y guárdalo en la base de datos
-        Programa programa = new Programa(null, 2L, "Derecho", 5678, "Programa que forma abogados", "urlDerecho.png", "A");
-        programaService.save(programa);
+        Programa programa = new Programa(null, 4L, "Derecho", 5678,
+                "Programa que forma abogados", "urlDerecho.png");
+        Programa programaAux = programaService.save(programa);
+        System.out.println("ID PROGRAMA: "+programaAux.getIdPrograma());
 
-        // Realiza la solicitud GET y verifica la respuesta
-        this.mockMvc.perform(get("/api/programa-service/programas/facultad/{id}", programa.getIdFacultad()))
+        this.mockMvc.perform(get("/api/programa-service/programas/facultad/4", programa.getIdFacultad()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idPrograma", is(programa.getIdFacultad().intValue())))
-                .andExpect(jsonPath("$.nombrePrograma", is(programa.getNombrePrograma())))
-                .andExpect(jsonPath("$.descripcionPrograma", is(programa.getDescripcionPrograma())))
-                .andExpect(jsonPath("$.imagenPrograma", is(programa.getImagenPrograma())))
-                .andExpect(jsonPath("$.facultad", is(programa.getFacultad())));
+                .andExpect(jsonPath("$[0]").exists())
+                .andExpect(jsonPath("$[0].idPrograma", is(programa.getIdFacultad().intValue())))
+                .andExpect(jsonPath("$[0].nombrePrograma", is(programa.getNombrePrograma())))
+                .andExpect(jsonPath("$[0].descripcionPrograma", is(programa.getDescripcionPrograma())))
+                .andExpect(jsonPath("$[0].imagenPrograma", is(programa.getImagenPrograma())));
 
-        // Limpia después de la prueba eliminando el programa
         programaService.deletePrograma(programa);
     }
 
@@ -117,27 +117,27 @@ public class ProgramaRestControllerTests {
      * Prueba del método PUT "/api/programa-service/pais", que comprueba que se actualiza un programa correctamente.
      * @throws Exception Se lanza una excepción si no se encuentra el país con el id especificado.
      */
-        @Test
+    @Test
     public void testEditarPrograma() throws Exception {
-        Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846, "Programa que forma Ingenieros Industriales", "Industriales.png", "Ingenieria");
-        programaService.save(programa);
-        programa.setIdPrograma(2l);
-        programa.setNombrePrograma("Derecho");
-        programa.setDescripcionPrograma("Programa que forma abogados");
-        programa.setFacultad("Humanidades");
-        programa.setImagenPrograma("urlDerecho.png");
-        programa.setSnies(5678);
+        Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846,
+                "Programa que forma Ingenieros Industriales", "Industriales.png");
+        Programa programaAux = programaService.save(programa);
 
-        this.mockMvc.perform(put("/api/programa-service/programa/{id}", programa.getIdPrograma())
+        programaAux.setIdPrograma(2l);
+        programaAux.setNombrePrograma("Derecho");
+        programaAux.setDescripcionPrograma("Programa que forma abogados");
+        programaAux.setImagenPrograma("urlDerecho.png");
+        programaAux.setSnies(5678);
+
+        this.mockMvc.perform(put("/api/programa-service/programa/{id}", programaAux.getIdPrograma())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(programa)))
+                        .content(asJsonString(programaAux)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idPrograma").exists()) // Verifica que idPrograma existe en el JSON
-                .andExpect(jsonPath("$.nombrePrograma", is(programa.getNombrePrograma())))
-                .andExpect(jsonPath("$.descripcionPrograma", is(programa.getDescripcionPrograma())))
-                .andExpect(jsonPath("$.facultad", is(programa.getFacultad())))
-                .andExpect(jsonPath("$.snies", is(programa.getSnies())));
-        programaService.deletePrograma(programa);
+                .andExpect(jsonPath("$.programa.idPrograma").exists()) // Verifica que idPrograma existe en el JSON
+                .andExpect(jsonPath("$.programa.nombrePrograma", is(programaAux.getNombrePrograma())))
+                .andExpect(jsonPath("$.programa.descripcionPrograma", is(programaAux.getDescripcionPrograma())))
+                .andExpect(jsonPath("$.programa.snies", is(programaAux.getSnies())));
+        programaService.deletePrograma(programaAux);
 
     }
      /**
@@ -146,7 +146,7 @@ public class ProgramaRestControllerTests {
      */
     @Test
     public void testDeletePrograma() throws Exception {
-        Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846, "Programa que forma Ingenieros Industriales", "Industriales.png", "Ingenieria");
+        Programa programa = new Programa(null, 3L, "Ingenieria Industrial", 465846, "Programa que forma Ingenieros Industriales", "Industriales.png");
         programa = programaService.save(programa);
 
         this.mockMvc.perform(delete("/api/programa-service/programa/{idPrograma}", programa.getIdPrograma()))
