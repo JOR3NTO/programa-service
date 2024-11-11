@@ -5,7 +5,7 @@ LABEL authors="team4"
 WORKDIR /programa-service
 
 # Copiar el archivo JAR generado al contenedor
-COPY target/curso-service-0.0.1-SNAPSHOT.jar programa-service.jar
+COPY target/programa-service-0.0.1-SNAPSHOT.jar programa-service.jar
 
 # Exponer el puerto en el que la aplicación se ejecuta
 EXPOSE 8080
