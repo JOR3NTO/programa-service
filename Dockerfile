@@ -11,4 +11,4 @@ COPY target/curso-service-0.0.1-SNAPSHOT.jar programa-service.jar
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación Spring Boot
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "programa-service.jar"]
