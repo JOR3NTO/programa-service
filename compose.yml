@@ -15,7 +15,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DB_URL: jdbc:postgresql://postgres:5432/curso_springboot
+      DB_URL: jdbc:postgresql://postgres:5435/curso_springboot
       DB_USERNAME: devdb
       DB_PASSWORD: a1b2c3d4
       JPA_DDL: create-drop
