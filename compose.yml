@@ -2,8 +2,20 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=curso_springboot'
-      - 'POSTGRES_PASSWORD=a1b2c3d4'
-      - 'POSTGRES_USER=devdb'
+      - POSTGRES_DB=curso_springboot
+      - POSTGRES_PASSWORD=a1b2c3d4
+      - POSTGRES_USER=devdb
     ports:
-      - '5432'
+      - '5435:5432'
+
+  programa-service:
+    image: 'Team4/programa-service:latest'
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/curso_springboot
+      DB_USERNAME: devdb
+      DB_PASSWORD: a1b2c3d4
+      JPA_DDL: create-drop
