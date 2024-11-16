@@ -1,6 +1,6 @@
 
 FROM openjdk:17-jdk-slim
-LABEL authors="team4"
+LABEL authors="dcrilop"
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /programa-service
 
